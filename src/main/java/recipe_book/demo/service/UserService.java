@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import recipe_book.demo.dto.CreateUserRequest;
+import recipe_book.demo.exceptions.UsernameAlreadyExistsException;
 import recipe_book.demo.model.User;
 import recipe_book.demo.repository.UserRepository;
 
@@ -36,6 +37,11 @@ public class UserService implements UserDetailsService {
     }
 
     public User createUser(CreateUserRequest request) {
+
+        if (userRepository.findByUsername(request.username()).isPresent()) {
+            throw new UsernameAlreadyExistsException("Username already exists!");
+        }
+
 
         User newUser = User.builder()
                 .name(request.name())

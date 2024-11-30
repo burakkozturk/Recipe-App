@@ -11,3 +11,8 @@ public class DemoApplication {
 	}
 
 }
+
+
+
+// TODO : Build Email Operations (SEND - VERIFY) and Reset Password
+// TODO : Rebuild User class and decide of initialize User

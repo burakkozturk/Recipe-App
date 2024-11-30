@@ -1,6 +1,7 @@
 package recipe_book.demo.controller;
 
 
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,7 +17,7 @@ import recipe_book.demo.service.UserService;
 @RestController
 @RequestMapping("/auth")
 @Slf4j
-public class UserController {
+public class AuthController {
 
     private final UserService service;
 
@@ -25,14 +26,14 @@ public class UserController {
     private final AuthenticationManager authenticationManager;
 
 
-    public UserController(UserService service, JwtService jwtService, AuthenticationManager authenticationManager) {
+    public AuthController(UserService service, JwtService jwtService, AuthenticationManager authenticationManager) {
         this.service = service;
         this.jwtService = jwtService;
         this.authenticationManager = authenticationManager;
     }
 
     @PostMapping("/register")
-    public User addUser(@RequestBody CreateUserRequest request) {
+    public User addUser(@RequestBody @Valid CreateUserRequest request) {
         return service.createUser(request);
     }
 
