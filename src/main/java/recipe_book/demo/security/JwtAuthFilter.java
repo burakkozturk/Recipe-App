@@ -13,19 +13,18 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import recipe_book.demo.service.JwtService;
-import recipe_book.demo.service.UserService;
+import recipe_book.demo.service.AuthService;
 
 import java.io.IOException;
-import java.util.Optional;
 
 @Component
 @Slf4j
 public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
-    private final UserService userService;
+    private final AuthService userService;
 
-    public JwtAuthFilter(JwtService jwtService, UserService userService) {
+    public JwtAuthFilter(JwtService jwtService, AuthService userService) {
         this.jwtService = jwtService;
         this.userService = userService;
     }

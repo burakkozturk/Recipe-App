@@ -12,21 +12,21 @@ import recipe_book.demo.dto.AuthRequest;
 import recipe_book.demo.dto.CreateUserRequest;
 import recipe_book.demo.model.User;
 import recipe_book.demo.service.JwtService;
-import recipe_book.demo.service.UserService;
+import recipe_book.demo.service.AuthService;
 
 @RestController
 @RequestMapping("/auth")
 @Slf4j
 public class AuthController {
 
-    private final UserService service;
+    private final AuthService service;
 
     private final JwtService jwtService;
 
     private final AuthenticationManager authenticationManager;
 
 
-    public AuthController(UserService service, JwtService jwtService, AuthenticationManager authenticationManager) {
+    public AuthController(AuthService service, JwtService jwtService, AuthenticationManager authenticationManager) {
         this.service = service;
         this.jwtService = jwtService;
         this.authenticationManager = authenticationManager;
