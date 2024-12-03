@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import jakarta.validation.constraints.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 
@@ -44,4 +46,14 @@ public class User implements UserDetails{
     @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)
     private Set<Role> authorities;
+
+    private String email;
+    private LocalDateTime createdAt;
+    private LocalDateTime lastLogin;
+    private LocalDate dateOfBirth;
+    private boolean isVerify;
+    private String profilePhoto;
+    private String biography;
+
 }
+

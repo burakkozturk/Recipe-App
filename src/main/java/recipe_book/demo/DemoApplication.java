@@ -14,5 +14,7 @@ public class DemoApplication {
 
 
 
-// TODO : Build Email Operations (SEND - VERIFY) and Reset Password
-// TODO : Rebuild User class and decide of initialize User
+
+// TODO: CRUD 4 Recipe !!!
+// TODO: Build Ingredients & Methods
+// TODO: Validation for username (min-max characters)

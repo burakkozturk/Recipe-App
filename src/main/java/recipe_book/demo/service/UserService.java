@@ -1,10 +1,16 @@
 package recipe_book.demo.service;
 
+import jakarta.transaction.Transactional;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import recipe_book.demo.dto.UpdateUserDetailsRequest;
 import recipe_book.demo.model.User;
 import recipe_book.demo.repository.UserRepository;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -18,6 +24,23 @@ public class UserService {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
+
+    @Transactional
+    public ResponseEntity<User> updateUserDetails(Long userId, UpdateUserDetailsRequest request) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        user.setEmail(request.getEmail());
+        user.setDateOfBirth(request.getDateOfBirth());
+        user.setProfilePhoto(request.getProfilePhoto());
+        user.setBiography(request.getBiography());
+        user.setCreatedAt(LocalDateTime.now());
+
+        User updatedUser = userRepository.save(user);
+
+        return new ResponseEntity<>(updatedUser, HttpStatus.OK);  // 200 OK
+    }
+
 
     public void resetPassword(String username, String newPassword) {
         Optional<User> userOpt = userRepository.findByUsername(username);
