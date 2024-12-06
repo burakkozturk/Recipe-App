@@ -3,6 +3,8 @@ package recipe_book.demo.service;
 import org.springframework.stereotype.Service;
 import recipe_book.demo.dto.RecipeDto;
 import recipe_book.demo.model.Category;
+import recipe_book.demo.model.Ingredient;
+import recipe_book.demo.model.Instruction;
 import recipe_book.demo.model.Recipe;
 import recipe_book.demo.repository.CategoryRepository;
 import recipe_book.demo.repository.RecipeRepository;
@@ -29,7 +31,7 @@ public class RecipeService {
         return recipeList;
     }
 
-    public Optional<Recipe> getRecipeById (UUID recipeId){
+    public Optional<Recipe> getRecipeById (Long recipeId){
 
         Optional<Recipe> optionalRecipe = recipeRepository.findById(recipeId);
         return optionalRecipe;
@@ -54,6 +56,30 @@ public class RecipeService {
 
         recipe.setAuthorId(recipeDTO.getAuthorId());
 
+        return recipeRepository.save(recipe);
+    }
+
+    public Recipe saveIngredients(Long recipeId, List<Ingredient> ingredients) {
+        Recipe recipe = recipeRepository.findById(recipeId)
+                .orElseThrow(() -> new RuntimeException("Recipe not found"));
+
+        for (Ingredient ingredient : ingredients) {
+            ingredient.setRecipe(recipe);
+        }
+
+        recipe.getIngredients().addAll(ingredients);
+        return recipeRepository.save(recipe);
+    }
+
+    public Recipe saveInstructions(Long recipeId, List<Instruction> instructions) {
+        Recipe recipe = recipeRepository.findById(recipeId)
+                .orElseThrow(() -> new RuntimeException("Recipe not found"));
+
+        for (Instruction instruction : instructions) {
+            instruction.setRecipe(recipe);
+        }
+
+        recipe.getInstructions().addAll(instructions);
         return recipeRepository.save(recipe);
     }
 }

@@ -8,5 +8,5 @@ import recipe_book.demo.model.Recipe;
 import java.util.UUID;
 
 @Repository
-public interface RecipeRepository extends JpaRepository<Recipe, UUID> {
+public interface RecipeRepository extends JpaRepository<Recipe, Long> {
 }

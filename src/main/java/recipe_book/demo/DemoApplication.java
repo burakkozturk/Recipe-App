@@ -14,9 +14,8 @@ public class DemoApplication {
 
 
 
-// TODO: !!!!! Complete Save Methods !!!!!
-// TODO: CRUD 4 Recipe !!!
-// TODO: Build Ingredients & Methods
+
+// TODO: CRUD 4 Recipe !!! --------------------> Delete Methods - Get Ingredients/Instructions by Recipe Id
 // TODO: Validation for username (min-max characters)
 // TODO: Build Admin Side & Create Get & Delete Methods 4 Users
 // TODO: Just 1 Account useable for 1 email address

@@ -4,6 +4,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import recipe_book.demo.dto.RecipeDto;
+import recipe_book.demo.model.Ingredient;
+import recipe_book.demo.model.Instruction;
 import recipe_book.demo.model.Recipe;
 import recipe_book.demo.service.RecipeService;
 
@@ -30,7 +32,7 @@ public class RecipeController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Recipe>> getRecipeById(@PathVariable UUID id){
+    public ResponseEntity<Optional<Recipe>> getRecipeById(@PathVariable Long id){
 
         Optional<Recipe> optionalRecipe = recipeService.getRecipeById(id);
         return new ResponseEntity<>(optionalRecipe, HttpStatus.OK);
@@ -43,5 +45,16 @@ public class RecipeController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedRecipe);
     }
 
+    @PostMapping("/{id}/ingredients")
+    public ResponseEntity<Recipe> saveIngredients(@PathVariable Long id, @RequestBody List<Ingredient> ingredients) {
+        Recipe updatedRecipe = recipeService.saveIngredients(id, ingredients);
+        return ResponseEntity.ok(updatedRecipe);
+    }
+
+    @PostMapping("/{id}/instructions")
+    public ResponseEntity<Recipe> saveInstructions(@PathVariable Long id, @RequestBody List<Instruction> instructions) {
+        Recipe updatedRecipe = recipeService.saveInstructions(id, instructions);
+        return ResponseEntity.ok(updatedRecipe);
+    }
 
 }
