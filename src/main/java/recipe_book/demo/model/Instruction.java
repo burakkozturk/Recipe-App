@@ -1,11 +1,10 @@
 package recipe_book.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.UUID;
 
 @Data
 @Entity
@@ -20,10 +19,11 @@ public class Instruction {
 
     private String step; // Adımın açıklaması
 
-    @Column(name = "instruction_order")
-    private Integer order;
+    @Column(name = "instruction_order", nullable = false)
+    private Integer order; // Adım sırası
 
     @ManyToOne
     @JoinColumn(name = "recipe_id", nullable = false)
+    @JsonBackReference
     private Recipe recipe;
 }

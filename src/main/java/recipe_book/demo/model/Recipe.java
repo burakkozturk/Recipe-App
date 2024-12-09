@@ -6,11 +6,9 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.GenericGenerator;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 
 @Data
 @Entity
@@ -23,7 +21,6 @@ public class Recipe {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     @Column(nullable = false)
     private String title;
 
@@ -33,32 +30,33 @@ public class Recipe {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "recipe_id")
+    // İlişkili Ingredient kayıtları
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "recipe")
+    @JsonManagedReference
     private List<Ingredient> ingredients;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "recipe_id")
+    // İlişkili Instruction kayıtları
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "recipe")
+    @JsonManagedReference
     private List<Instruction> instructions;
 
+    // Kategori ile ilişki
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
-    @JsonManagedReference
-    @JsonIgnore
     private Category category;
 
+    // Tags: Birden fazla etiket
     @ElementCollection
     @CollectionTable(name = "recipe_tags", joinColumns = @JoinColumn(name = "recipe_id"))
     @Column(name = "tag")
     private List<String> tags;
 
     private String imageUrl;
-
     private String difficulty;
     private Integer cookTime;
     private Integer prepTime;
 
-
+    // Recipe'in yazarı
     @Column(nullable = false)
     private Long authorId;
 

@@ -11,7 +11,6 @@ import recipe_book.demo.service.RecipeService;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/recipe")
@@ -56,5 +55,37 @@ public class RecipeController {
         Recipe updatedRecipe = recipeService.saveInstructions(id, instructions);
         return ResponseEntity.ok(updatedRecipe);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Recipe> updateRecipe(@PathVariable Long id, @RequestBody RecipeDto recipeDTO) {
+        Recipe updatedRecipe = recipeService.updateRecipe(id, recipeDTO);
+        return ResponseEntity.ok(updatedRecipe);
+    }
+
+    @PutMapping("/{id}/ingredients")
+    public ResponseEntity<Recipe> updateIngredients(@PathVariable Long id, @RequestBody List<Ingredient> ingredients) {
+        Recipe updatedRecipe = recipeService.updateIngredients(id, ingredients);
+        return ResponseEntity.ok(updatedRecipe);
+    }
+
+    @PutMapping("/{id}/instructions")
+    public ResponseEntity<Recipe> updateInstructions(@PathVariable Long id, @RequestBody List<Instruction> instructions) {
+        Recipe updatedRecipe = recipeService.updateInstructions(id, instructions);
+        return ResponseEntity.ok(updatedRecipe);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteRecipe(@PathVariable Long id){
+        recipeService.deleteRecipe(id);
+        return new ResponseEntity<>("Deleted",HttpStatus.OK);
+    }
+
+    @DeleteMapping("user/{userId}")
+    public ResponseEntity<String> deleteRecipesByUserId(@PathVariable Long userId){
+        recipeService.deleteRecipe(userId);
+        return new ResponseEntity<>("Deleted",HttpStatus.OK);
+    }
+
+
 
 }
