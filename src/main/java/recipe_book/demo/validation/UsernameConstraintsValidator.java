@@ -1,44 +1,37 @@
 package recipe_book.demo.validation;
 
-
 import org.passay.*;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import java.util.Arrays;
 
-public class UsernameConstraintsValidator implements ConstraintValidator<Password, String> {
-
+public class UsernameConstraintsValidator implements ConstraintValidator<Username, String> { // Password yerine Username yazdık
 
     @Override
-    public boolean isValid(String password, ConstraintValidatorContext constraintValidatorContext) {
+    public boolean isValid(String username, ConstraintValidatorContext constraintValidatorContext) { // password yerine username
 
-        PasswordValidator passwordValidator = new PasswordValidator(
+        PasswordValidator usernameValidator = new PasswordValidator(
                 Arrays.asList(
-                        //Length rule. Min 10 max 128 characters
+                        // Length rule: Min 5, Max 15 characters
                         new LengthRule(5, 15),
 
-
+                        // No whitespace allowed
                         new WhitespaceRule()
-
-
                 )
         );
 
-        RuleResult result = passwordValidator.validate(new PasswordData(password));
+        RuleResult result = usernameValidator.validate(new PasswordData(username)); // password yerine username
 
         if (result.isValid()) {
-
             return true;
-
         }
 
-        //Sending one message each time failed validation.
-        constraintValidatorContext.buildConstraintViolationWithTemplate(passwordValidator.getMessages(result).stream().findFirst().get())
-                .addConstraintViolation()
-                .disableDefaultConstraintViolation();
+        // Sending one message each time validation fails.
+        constraintValidatorContext.buildConstraintViolationWithTemplate(
+                usernameValidator.getMessages(result).stream().findFirst().orElse("Invalid username!")
+        ).addConstraintViolation().disableDefaultConstraintViolation();
 
         return false;
-
     }
 }

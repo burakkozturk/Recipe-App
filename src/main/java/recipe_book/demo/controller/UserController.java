@@ -12,6 +12,7 @@ import recipe_book.demo.service.UserService;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/user")
@@ -21,6 +22,13 @@ public class UserController {
 
     public UserController(UserService passwordResetService) {
         this.userService = passwordResetService;
+    }
+
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Optional<User>> getUserById(@PathVariable Long userId){
+        Optional<User> user = userService.getUserById(userId);
+        return new ResponseEntity<>(user,HttpStatus.OK);
     }
 
     @PutMapping("/update/{id}")

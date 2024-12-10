@@ -25,6 +25,11 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    public Optional<User> getUserById(Long userId){
+        Optional<User> user = userRepository.findById(userId);
+        return user;
+    }
+
     @Transactional
     public ResponseEntity<User> updateUserDetails(Long userId, UpdateUserDetailsRequest request) {
         User user = userRepository.findById(userId)

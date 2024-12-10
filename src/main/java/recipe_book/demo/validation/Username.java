@@ -7,7 +7,7 @@ import java.lang.annotation.*;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Constraint(validatedBy = PasswordConstraintsValidator.class)
+@Constraint(validatedBy = UsernameConstraintsValidator.class)
 public @interface Username {
 
     String message() default "Invalid username!";
