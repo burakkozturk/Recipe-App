@@ -3,9 +3,11 @@ package recipe_book.demo.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import recipe_book.demo.model.User;
 import recipe_book.demo.model.VerificationCode;
+import recipe_book.demo.repository.UserRepository;
 import recipe_book.demo.repository.VerificationCodeRepository;
-import recipe_book.demo.service.VerificationCodeService;
+import recipe_book.demo.service.VerificationService;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -15,10 +17,16 @@ import java.util.Optional;
 public class VerificationController {
 
     @Autowired
-    private VerificationCodeService verificationCodeService;
+    private VerificationService verificationCodeService;
 
     @Autowired
     private VerificationCodeRepository verificationCodeRepository;
+
+    private final UserRepository userRepository;
+
+    public VerificationController(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @PostMapping("/send-code")
     public ResponseEntity<String> sendCode(@RequestParam String email) {
@@ -36,4 +44,5 @@ public class VerificationController {
             return ResponseEntity.status(400).body("Invalid or expired verification code.");
         }
     }
+
 }

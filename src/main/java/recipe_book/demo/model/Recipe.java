@@ -30,22 +30,20 @@ public class Recipe {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    // İlişkili Ingredient kayıtları
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "recipe")
     @JsonManagedReference
     private List<Ingredient> ingredients;
 
-    // İlişkili Instruction kayıtları
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "recipe")
     @JsonManagedReference
     private List<Instruction> instructions;
 
-    // Kategori ile ilişki
+
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
-    // Tags: Birden fazla etiket
+
     @ElementCollection
     @CollectionTable(name = "recipe_tags", joinColumns = @JoinColumn(name = "recipe_id"))
     @Column(name = "tag")
@@ -56,7 +54,6 @@ public class Recipe {
     private Integer cookTime;
     private Integer prepTime;
 
-    // Recipe'in yazarı
     @Column(nullable = false)
     private Long authorId;
 

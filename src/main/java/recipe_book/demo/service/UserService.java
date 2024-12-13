@@ -9,7 +9,6 @@ import recipe_book.demo.dto.UpdateUserDetailsRequest;
 import recipe_book.demo.model.User;
 import recipe_book.demo.repository.UserRepository;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -35,6 +34,14 @@ public class UserService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
+        // Email kontrolü
+        if (!user.getEmail().equals(request.getEmail())) { // Sadece email değiştirilmeye çalışıldığında kontrol et
+            userRepository.findByEmail(request.getEmail())
+                    .ifPresent(existingUser -> {
+                        throw new IllegalArgumentException("Email already exists!");
+                    });
+        }
+
         user.setEmail(request.getEmail());
         user.setDateOfBirth(request.getDateOfBirth());
         user.setProfilePhoto(request.getProfilePhoto());
@@ -45,6 +52,7 @@ public class UserService {
 
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);  // 200 OK
     }
+
 
 
     public void resetPassword(String username, String newPassword) {

@@ -47,7 +47,9 @@ public class User implements UserDetails{
     @Enumerated(EnumType.STRING)
     private Set<Role> authorities;
 
+    @Column(nullable = false, unique = true)
     private String email;
+
     private LocalDateTime createdAt;
     private LocalDateTime lastLogin;
     private LocalDate dateOfBirth;
