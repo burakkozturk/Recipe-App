@@ -16,11 +16,9 @@ public class Favourite {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
     @JoinColumn(name = "recipe_id", nullable = false)
     private Long recipeId;
 
-    @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private Long userId;
 

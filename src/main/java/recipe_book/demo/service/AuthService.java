@@ -47,6 +47,7 @@ public class AuthService implements UserDetailsService {
                 .name(request.name())
                 .username(request.username())
                 .password(passwordEncoder.encode(request.password()))
+                .email(request.email())
                 .authorities(request.authorities())
                 .accountNonExpired(true)
                 .credentialsNonExpired(true)

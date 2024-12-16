@@ -19,7 +19,7 @@ public class FavouriteController {
         this.favouriteService = favouriteService;
     }
 
-    @PostMapping
+    @PostMapping("")
     public ResponseEntity<String> addFavourite(@RequestBody Map<String, Long> request) {
         Long userId = request.get("userId");
         Long recipeId = request.get("recipeId");
@@ -27,7 +27,7 @@ public class FavouriteController {
         return ResponseEntity.ok("Recipe added to favourites.");
     }
 
-    @DeleteMapping
+    @DeleteMapping("")
     public ResponseEntity<String> removeFavourite(@RequestBody Map<String, Long> request) {
         Long userId = request.get("userId");
         Long recipeId = request.get("recipeId");
@@ -35,9 +35,13 @@ public class FavouriteController {
         return ResponseEntity.ok("Recipe removed from favourites.");
     }
 
+    // NOT BODY JUST ID
+
     @GetMapping("/{userId}")
     public ResponseEntity<List<Favourite>> getUserFavourites(@PathVariable Long userId) {
         List<Favourite> favourites = favouriteService.getUserFavourites(userId);
         return ResponseEntity.ok(favourites);
     }
+
+    //This recipe is already in your favourites. !!!!!!!!!! EXCEPTION
 }
