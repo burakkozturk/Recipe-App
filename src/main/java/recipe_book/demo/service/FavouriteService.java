@@ -2,6 +2,7 @@ package recipe_book.demo.service;
 
 import org.springframework.stereotype.Service;
 import recipe_book.demo.model.Favourite;
+import recipe_book.demo.model.User;
 import recipe_book.demo.repository.FavouriteRepository;
 
 import java.util.List;
@@ -33,4 +34,13 @@ public class FavouriteService {
     public List<Favourite> getUserFavourites(Long userId) {
         return favouriteRepository.findByUserId(userId);
     }
+
+    public List<Long> getUsersByRecipeId(Long recipeId) {
+        List<Favourite> favourites = favouriteRepository.findByRecipeId(recipeId);
+        // Kullanıcı ID'lerini almak için mapping yap
+        return favourites.stream().map(Favourite::getUserId).toList();
+    }
+
+
 }
+

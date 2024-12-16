@@ -43,5 +43,12 @@ public class FavouriteController {
         return ResponseEntity.ok(favourites);
     }
 
+    @GetMapping("/recipe/{recipeId}/users")
+    public ResponseEntity<List<Long>> getUsersByRecipeId(@PathVariable Long recipeId) {
+        List<Long> userIds = favouriteService.getUsersByRecipeId(recipeId);
+        return ResponseEntity.ok(userIds);
+    }
+
+
     //This recipe is already in your favourites. !!!!!!!!!! EXCEPTION
 }
