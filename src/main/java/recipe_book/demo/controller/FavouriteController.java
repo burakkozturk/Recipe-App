@@ -8,6 +8,7 @@ import recipe_book.demo.service.FavouriteService;
 import java.util.List;
 import java.util.Map;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/favourites")
 public class FavouriteController {
