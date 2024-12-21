@@ -57,5 +57,8 @@ public class User implements UserDetails{
     private String profilePhoto;
     private String biography;
 
+    private int followersCount = 0; // Optional
+    private int followingCount = 0; // Optional
+
 }
 

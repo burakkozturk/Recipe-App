@@ -15,8 +15,6 @@ public class DemoApplication {
 }
 
 
-
-// TODO: Comment ++
 // TODO: Follow ++
 // TODO: Verify Email !!! (Email HTML format )
 
