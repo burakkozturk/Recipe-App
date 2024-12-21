@@ -1,5 +1,6 @@
 package recipe_book.demo.service;
 
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import recipe_book.demo.model.Follow;
 import recipe_book.demo.model.User;
@@ -47,6 +48,7 @@ public class FollowService {
         userRepository.save(following);
     }
 
+    @Transactional
     public void unfollowUser(Long followerId, Long followingId) {
         if (!followRepository.existsByFollowerIdAndFollowingId(followerId, followingId)) {
             throw new IllegalArgumentException("You are not following this user.");

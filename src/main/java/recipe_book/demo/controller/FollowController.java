@@ -18,17 +18,15 @@ public class FollowController {
         this.followService = followService;
     }
 
-    @PostMapping("/{followingId}")
-    public ResponseEntity<String> followUser(@RequestBody Map<String, Long> payload, @PathVariable Long followingId) {
-        Long followerId = payload.get("userId");
+    @PostMapping("")
+    public ResponseEntity<String> followUser(@RequestParam Long followerId, @RequestParam Long followingId) {
         followService.followUser(followerId, followingId);
         return ResponseEntity.ok("Followed successfully.");
     }
 
-
-    @DeleteMapping("/{followingId}")
-    public ResponseEntity<String> unfollowUser(@RequestParam Long userId, @PathVariable Long followingId) {
-        followService.unfollowUser(userId, followingId);
+    @DeleteMapping("")
+    public ResponseEntity<String> unfollowUser(@RequestParam Long followerId, @RequestParam Long followingId) {
+        followService.unfollowUser(followerId, followingId);
         return ResponseEntity.ok("Unfollowed successfully.");
     }
 
