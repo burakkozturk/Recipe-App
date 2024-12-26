@@ -15,7 +15,4 @@ public class DemoApplication {
 }
 
 
-// TODO: Follow ++
 // TODO: Verify Email !!! (Email HTML format )
-
-// TODO: ADD COMMENT REQUESTS To POSTMAN !
