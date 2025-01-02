@@ -44,6 +44,11 @@ public class RecipeService {
         return optionalRecipe;
     }
 
+    public List<Recipe> getProductByCategoryId(Long categoryId){
+        List<Recipe> list = recipeRepository.findByCategoryId(categoryId);
+        return list;
+    }
+
     public Recipe saveGenerally(RecipeDto recipeDTO) {
         Recipe recipe = new Recipe();
         recipe.setTitle(recipeDTO.getTitle());

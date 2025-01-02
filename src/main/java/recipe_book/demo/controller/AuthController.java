@@ -16,6 +16,7 @@ import recipe_book.demo.service.AuthService;
 
 @RestController
 @RequestMapping("/auth")
+@CrossOrigin
 @Slf4j
 public class AuthController {
 

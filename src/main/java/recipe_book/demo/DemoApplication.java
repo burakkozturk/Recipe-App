@@ -15,4 +15,11 @@ public class DemoApplication {
 }
 
 
-// TODO: Verify Email !!! (Email HTML format )
+
+
+// TODO: Logging for all methods but keep simple
+// TODO: Rate Limiter
+// TODO: Postman Recipe Category
+
+
+// https://dribbble.com/shots/20792040-Cookpedia-Food-Recipe-Mobile-App

@@ -12,6 +12,7 @@ import recipe_book.demo.service.RecipeService;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/recipe")
 public class RecipeController {
@@ -35,6 +36,13 @@ public class RecipeController {
 
         Optional<Recipe> optionalRecipe = recipeService.getRecipeById(id);
         return new ResponseEntity<>(optionalRecipe, HttpStatus.OK);
+    }
+
+    @GetMapping("/category/{categoryId}")
+    public ResponseEntity<List<Recipe>> getRecipesByCategoryId(@PathVariable Long categoryId){
+
+        List<Recipe> recipeList = recipeService.getProductByCategoryId(categoryId);
+        return new ResponseEntity<>(recipeList, HttpStatus.OK);
     }
 
 
