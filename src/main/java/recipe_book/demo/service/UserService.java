@@ -29,6 +29,10 @@ public class UserService {
         return user;
     }
 
+    public Optional<User> getUserByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
     @Transactional
     public ResponseEntity<User> updateUserDetails(Long userId, UpdateUserDetailsRequest request) {
         User user = userRepository.findById(userId)

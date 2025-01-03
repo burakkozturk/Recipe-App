@@ -31,6 +31,14 @@ public class UserController {
         return new ResponseEntity<>(user,HttpStatus.OK);
     }
 
+    @GetMapping("/username/{username}")
+    public ResponseEntity<User> getUserByUsername(@PathVariable String username) {
+        Optional<User> user = userService.getUserByUsername(username);
+        return user.map(ResponseEntity::ok)
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+
     @PutMapping("/update/{id}")
     public ResponseEntity<User> updateUserDetails(@PathVariable Long id, @RequestBody UpdateUserDetailsRequest request) {
         try {

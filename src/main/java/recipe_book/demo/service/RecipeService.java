@@ -3,14 +3,8 @@ package recipe_book.demo.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import recipe_book.demo.dto.RecipeDto;
-import recipe_book.demo.model.Category;
-import recipe_book.demo.model.Ingredient;
-import recipe_book.demo.model.Instruction;
-import recipe_book.demo.model.Recipe;
-import recipe_book.demo.repository.CategoryRepository;
-import recipe_book.demo.repository.IngredientsRepository;
-import recipe_book.demo.repository.InstructionRepository;
-import recipe_book.demo.repository.RecipeRepository;
+import recipe_book.demo.model.*;
+import recipe_book.demo.repository.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -24,12 +18,14 @@ public class RecipeService {
     private final IngredientsRepository ingredientsRepository;
 
     private final InstructionRepository instructionRepository;
+    private final UserService userService ;
 
-    public RecipeService(RecipeRepository recipeRepository, CategoryRepository categoryRepository, IngredientsRepository ingredientsRepository, InstructionRepository instructionRepository) {
+    public RecipeService(RecipeRepository recipeRepository, CategoryRepository categoryRepository, IngredientsRepository ingredientsRepository, InstructionRepository instructionRepository, UserRepository userRepository, UserService userService) {
         this.recipeRepository = recipeRepository;
         this.categoryRepository = categoryRepository;
         this.ingredientsRepository = ingredientsRepository;
         this.instructionRepository = instructionRepository;
+        this.userService = userService;
     }
 
     public List<Recipe> getAllRecipes(){
@@ -47,6 +43,13 @@ public class RecipeService {
     public List<Recipe> getProductByCategoryId(Long categoryId){
         List<Recipe> list = recipeRepository.findByCategoryId(categoryId);
         return list;
+    }
+
+    public List<Recipe> getRecipesByUsername(String username) {
+        User user = userService.getUserByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        return recipeRepository.findByAuthorId(user.getId());
     }
 
     public Recipe saveGenerally(RecipeDto recipeDTO) {

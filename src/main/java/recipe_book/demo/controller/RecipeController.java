@@ -45,6 +45,11 @@ public class RecipeController {
         return new ResponseEntity<>(recipeList, HttpStatus.OK);
     }
 
+    @GetMapping("/user/{username}")
+    public ResponseEntity<List<Recipe>> getRecipesByUsername(@PathVariable String username) {
+        List<Recipe> recipes = recipeService.getRecipesByUsername(username);
+        return ResponseEntity.ok(recipes);
+    }
 
     @PostMapping("/save")
     public ResponseEntity<Recipe> saveGenerally(@RequestBody RecipeDto recipeDTO) {
