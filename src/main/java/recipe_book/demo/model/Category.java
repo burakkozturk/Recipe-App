@@ -23,6 +23,8 @@ public class Category {
     @Column(nullable = false, unique = true)
     private String name;
 
+    private String image_url;
+
     @OneToMany(mappedBy = "category")
     @JsonBackReference
     private List<Recipe> recipes;
