@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import recipe_book.demo.dto.RecipeDto;
+import recipe_book.demo.dto.RecipeResponse;
 import recipe_book.demo.model.Ingredient;
 import recipe_book.demo.model.Instruction;
 import recipe_book.demo.model.Recipe;
@@ -11,7 +12,6 @@ import recipe_book.demo.service.RecipeService;
 
 import java.util.List;
 import java.util.Optional;
-
 @CrossOrigin
 @RestController
 @RequestMapping("/api/recipe")
@@ -23,67 +23,63 @@ public class RecipeController {
         this.recipeService = recipeService;
     }
 
-
     @GetMapping("")
-    public ResponseEntity<List<Recipe>> getAllRecipes(){
-
-        List<Recipe> recipeList = recipeService.getAllRecipes();
+    public ResponseEntity<List<RecipeResponse>> getAllRecipes() {
+        List<RecipeResponse> recipeList = recipeService.getAllRecipes();
         return ResponseEntity.ok(recipeList);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Recipe>> getRecipeById(@PathVariable Long id){
-
-        Optional<Recipe> optionalRecipe = recipeService.getRecipeById(id);
-        return new ResponseEntity<>(optionalRecipe, HttpStatus.OK);
+    public ResponseEntity<RecipeResponse> getRecipeById(@PathVariable Long id) {
+        RecipeResponse recipe = recipeService.getRecipeById(id);
+        return ResponseEntity.ok(recipe);
     }
 
     @GetMapping("/category/{categoryId}")
-    public ResponseEntity<List<Recipe>> getRecipesByCategoryId(@PathVariable Long categoryId){
-
-        List<Recipe> recipeList = recipeService.getProductByCategoryId(categoryId);
-        return new ResponseEntity<>(recipeList, HttpStatus.OK);
+    public ResponseEntity<List<RecipeResponse>> getRecipesByCategoryId(@PathVariable Long categoryId){
+        List<RecipeResponse> recipeList = recipeService.getRecipesByCategoryId(categoryId);
+        return ResponseEntity.ok(recipeList);
     }
 
     @GetMapping("/user/{username}")
-    public ResponseEntity<List<Recipe>> getRecipesByUsername(@PathVariable String username) {
-        List<Recipe> recipes = recipeService.getRecipesByUsername(username);
+    public ResponseEntity<List<RecipeResponse>> getRecipesByUsername(@PathVariable String username) {
+        List<RecipeResponse> recipes = recipeService.getRecipesByUsername(username);
         return ResponseEntity.ok(recipes);
     }
 
     @PostMapping("/save")
-    public ResponseEntity<Recipe> saveGenerally(@RequestBody RecipeDto recipeDTO) {
-        Recipe savedRecipe = recipeService.saveGenerally(recipeDTO);
+    public ResponseEntity<RecipeResponse> saveGenerally(@RequestBody RecipeDto recipeDTO) {
+        RecipeResponse savedRecipe = recipeService.saveGenerally(recipeDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedRecipe);
     }
 
     @PostMapping("/{id}/ingredients")
-    public ResponseEntity<Recipe> saveIngredients(@PathVariable Long id, @RequestBody List<Ingredient> ingredients) {
-        Recipe updatedRecipe = recipeService.saveIngredients(id, ingredients);
+    public ResponseEntity<RecipeResponse> saveIngredients(@PathVariable Long id, @RequestBody List<Ingredient> ingredients) {
+        RecipeResponse updatedRecipe = recipeService.saveIngredients(id, ingredients);
         return ResponseEntity.ok(updatedRecipe);
     }
 
     @PostMapping("/{id}/instructions")
-    public ResponseEntity<Recipe> saveInstructions(@PathVariable Long id, @RequestBody List<Instruction> instructions) {
-        Recipe updatedRecipe = recipeService.saveInstructions(id, instructions);
+    public ResponseEntity<RecipeResponse> saveInstructions(@PathVariable Long id, @RequestBody List<Instruction> instructions) {
+        RecipeResponse updatedRecipe = recipeService.saveInstructions(id, instructions);
         return ResponseEntity.ok(updatedRecipe);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Recipe> updateRecipe(@PathVariable Long id, @RequestBody RecipeDto recipeDTO) {
-        Recipe updatedRecipe = recipeService.updateRecipe(id, recipeDTO);
+    public ResponseEntity<RecipeResponse> updateRecipe(@PathVariable Long id, @RequestBody RecipeDto recipeDTO) {
+        RecipeResponse updatedRecipe = recipeService.updateRecipe(id, recipeDTO);
         return ResponseEntity.ok(updatedRecipe);
     }
 
     @PutMapping("/{id}/ingredients")
-    public ResponseEntity<Recipe> updateIngredients(@PathVariable Long id, @RequestBody List<Ingredient> ingredients) {
-        Recipe updatedRecipe = recipeService.updateIngredients(id, ingredients);
+    public ResponseEntity<RecipeResponse> updateIngredients(@PathVariable Long id, @RequestBody List<Ingredient> ingredients) {
+        RecipeResponse updatedRecipe = recipeService.updateIngredients(id, ingredients);
         return ResponseEntity.ok(updatedRecipe);
     }
 
     @PutMapping("/{id}/instructions")
-    public ResponseEntity<Recipe> updateInstructions(@PathVariable Long id, @RequestBody List<Instruction> instructions) {
-        Recipe updatedRecipe = recipeService.updateInstructions(id, instructions);
+    public ResponseEntity<RecipeResponse> updateInstructions(@PathVariable Long id, @RequestBody List<Instruction> instructions) {
+        RecipeResponse updatedRecipe = recipeService.updateInstructions(id, instructions);
         return ResponseEntity.ok(updatedRecipe);
     }
 
@@ -94,11 +90,8 @@ public class RecipeController {
     }
 
     @DeleteMapping("user/{userId}")
-    public ResponseEntity<String> deleteRecipesByUserId(@PathVariable Long userId){
-        recipeService.deleteRecipe(userId);
-        return new ResponseEntity<>("Deleted",HttpStatus.OK);
+    public ResponseEntity<String> deleteRecipesByUserId(@PathVariable Long userId) {
+        recipeService.deleteAllRecipesByUserId(userId);
+        return ResponseEntity.ok("All recipes by user deleted successfully");
     }
-
-
-
 }

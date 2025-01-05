@@ -1,6 +1,7 @@
 package recipe_book.demo.model;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,6 +12,7 @@ import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 
@@ -59,6 +61,10 @@ public class User implements UserDetails{
 
     private int followersCount = 0; // Optional
     private int followingCount = 0; // Optional
+
+    @OneToMany(mappedBy = "author")
+    @JsonManagedReference
+    private List<Recipe> recipes;
 
 }
 

@@ -1,5 +1,6 @@
 package recipe_book.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -54,8 +55,11 @@ public class Recipe {
     private Integer cookTime;
     private Integer prepTime;
 
-    @Column(nullable = false)
-    private Long authorId;
+    @ManyToOne
+    @JoinColumn(name = "author_id", referencedColumnName = "id")
+    @JsonManagedReference
+    private User author;
+
 
     private Integer likes;
 }

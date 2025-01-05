@@ -6,15 +6,14 @@ import java.util.List;
 
 @Data
 public class RecipeDto {
-
     private String title;
     private String description;
     private Long categoryId;
-    private List<String> tags;
     private String imagery;
     private String difficulty;
-    private int cookTime;
-    private int prepTime;
-
+    private Integer cookTime;
+    private Integer prepTime;
     private Long authorId;
+    private List<String> tags;
 }
+
