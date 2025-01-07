@@ -1,6 +1,7 @@
 package recipe_book.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,6 +25,6 @@ public class Instruction {
 
     @ManyToOne
     @JoinColumn(name = "recipe_id", nullable = false)
-    @JsonBackReference
+    @JsonIgnore
     private Recipe recipe;
 }

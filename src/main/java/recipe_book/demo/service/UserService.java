@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import recipe_book.demo.dto.UpdateUserDetailsRequest;
+import recipe_book.demo.dto.UserResponse;
 import recipe_book.demo.model.User;
 import recipe_book.demo.repository.UserRepository;
 
@@ -15,7 +16,6 @@ import java.util.Optional;
 @Service
 public class UserService {
 
-
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
@@ -24,9 +24,8 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public Optional<User> getUserById(Long userId){
-        Optional<User> user = userRepository.findById(userId);
-        return user;
+    public Optional<User> getUserById(Long userId) {
+        return userRepository.findById(userId);
     }
 
     public Optional<User> getUserByUsername(String username) {
@@ -34,12 +33,11 @@ public class UserService {
     }
 
     @Transactional
-    public ResponseEntity<User> updateUserDetails(Long userId, UpdateUserDetailsRequest request) {
+    public ResponseEntity<UserResponse> updateUserDetails(Long userId, UpdateUserDetailsRequest request) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        // Email kontrolü
-        if (!user.getEmail().equals(request.getEmail())) { // Sadece email değiştirilmeye çalışıldığında kontrol et
+        if (!user.getEmail().equals(request.getEmail())) {
             userRepository.findByEmail(request.getEmail())
                     .ifPresent(existingUser -> {
                         throw new IllegalArgumentException("Email already exists!");
@@ -53,21 +51,17 @@ public class UserService {
         user.setCreatedAt(LocalDateTime.now());
 
         User updatedUser = userRepository.save(user);
-
-        return new ResponseEntity<>(updatedUser, HttpStatus.OK);  // 200 OK
+        return new ResponseEntity<>(UserResponse.fromUser(updatedUser), HttpStatus.OK);
     }
-
-
 
     public void resetPassword(String username, String newPassword) {
         Optional<User> userOpt = userRepository.findByUsername(username);
         if (userOpt.isPresent()) {
             User user = userOpt.get();
-            user.setPassword(passwordEncoder.encode(newPassword)); // Şifre hashing
+            user.setPassword(passwordEncoder.encode(newPassword));
             userRepository.save(user);
         } else {
             throw new IllegalArgumentException("User not found.");
         }
     }
-
 }

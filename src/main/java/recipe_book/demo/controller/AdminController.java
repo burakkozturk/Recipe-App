@@ -3,6 +3,7 @@ package recipe_book.demo.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import recipe_book.demo.dto.UserListResponse;
 import recipe_book.demo.model.User;
 import recipe_book.demo.service.AdminService;
 
@@ -19,9 +20,10 @@ public class AdminController {
     }
 
     @GetMapping("/user")
-    public ResponseEntity<List<User>> getAllUser(){
-        List<User> userList = adminService.getAllUser();
-        return new ResponseEntity<>(userList, HttpStatus.OK);
+    public ResponseEntity<UserListResponse> getAllUsers() {
+        List<User> users = adminService.getAllUser();
+        UserListResponse response = UserListResponse.fromUsers(users);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @DeleteMapping("/{userId}")
